@@ -7,12 +7,13 @@ Then, run the bot once, it will set itself up.
 
 Then restart it. it could take a long time to get itself properly going, if you already have a massive following. 
 
-#And, importantly:
+# And, importantly:
+
 It did unfollow all of my followers by mistake, and I am not 100% sure it wont do it again, so keep an eye on it. 
 
 
 
-#What its for and what it wont do
+# What its for and what it wont do
 
 This bot it designed to give the community a little tickle to help get you noticed, it retweets (provided you set this up properly) hashtags from a specific interest and follows based on a specific interest. 
 
