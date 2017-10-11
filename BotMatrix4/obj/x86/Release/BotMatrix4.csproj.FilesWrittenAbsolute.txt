@@ -1,0 +1,14 @@
+/home/colin/BotMatrix4/BotMatrix4/obj/x86/Release/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/colin/BotMatrix4/BotMatrix4/bin/Release/BotMatrix4.exe.mdb
+/home/colin/BotMatrix4/BotMatrix4/bin/Release/BotMatrix4.exe
+/home/colin/BotMatrix4/BotMatrix4/obj/x86/Release/BotMatrix4.exe
+/home/colin/BotMatrix4/BotMatrix4/obj/x86/Release/BotMatrix4.exe.mdb
+/home/colin/BotMatrix4/BotMatrix4/bin/Release/System.Reactive.Interfaces.dll
+/home/colin/BotMatrix4/BotMatrix4/bin/Release/System.Reactive.Core.dll
+/home/colin/BotMatrix4/BotMatrix4/bin/Release/System.Reactive.Linq.dll
+/home/colin/BotMatrix4/BotMatrix4/bin/Release/System.Reactive.PlatformServices.dll
+/home/colin/BotMatrix4/BotMatrix4/bin/Release/LinqToTwitter.AspNet.dll
+/home/colin/BotMatrix4/BotMatrix4/bin/Release/LinqToTwitter.net.dll
+/home/colin/BotMatrix4/BotMatrix4/bin/Release/Newtonsoft.Json.dll
+/home/colin/BotMatrix4/BotMatrix4/bin/Release/Hammock.ClientProfile.dll
+/home/colin/BotMatrix4/BotMatrix4/bin/Release/TweetSharp.dll
