@@ -1,0 +1,1 @@
+Once you build this application (users LinqToTwitter) you need to copy the contents of this folder int othe build release folder, the app needs them to work. And fill out the bot.config file.

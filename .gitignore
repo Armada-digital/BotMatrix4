@@ -14,7 +14,7 @@ BotMatrix4.exe
 *~
 
 # Build/test output
-
+[Oo]bj/
 [Bb]in/
 TestResults/
 

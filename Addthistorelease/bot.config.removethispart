@@ -1,0 +1,24 @@
+#BotMatrix4 Config
+#Fill out details below, be careful not to include white space, and remove that part the part that says removethispart.
+
+#Consumer Key:
+
+#Consumer Key Secret:
+
+#Access Token:
+
+#Access Token Secret:
+
+#Screen Name: (With no '@')
+
+#desired ratio of following to followers in double format, eg 0.8
+
+#Hashtags - hashtags you might find interesting
+<end>
+
+#Follow Words - words which might cause you to follow a user
+<end>
+
+#Filter Words - words which will cause you not to want to retweet or interact with status or user
+<end>
+
