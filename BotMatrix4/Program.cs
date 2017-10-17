@@ -141,7 +141,7 @@ namespace BotMatrix4
 						{
 							var friendships = Util.FindFriendship(Session.screenname, f.ScreenName);
 							count++;
-							if (count > 49) {
+							if (count > 30) {
 								Cutil.Line("<Unfollow> - Internal limit reached", ConsoleColor.DarkCyan);
 								break;
 							}
@@ -160,16 +160,9 @@ namespace BotMatrix4
 									{
 										Cutil.Line("<Unfollow> - User, " + f.ScreenName + ", not followed back unfollowing", ConsoleColor.DarkCyan);
 										Util.UnfollowUserByScreenname(f.ScreenName);
-
 									}
-
-
 								}
-
-
-
 							}
-
 						}
 						catch (Exception ex)
 						{
@@ -178,7 +171,7 @@ namespace BotMatrix4
 					}
 					else
 					{
-						Cutil.Line("<Unfollow> - " + f.ScreenName + " is not of age.".PadRight(20) + "Age: " + " " + age , ConsoleColor.Cyan);
+						Cutil.Line("<Unfollow> - " + f.ScreenName + " is not of age.".PadRight(20), ConsoleColor.Cyan);
 					}
 
 				}

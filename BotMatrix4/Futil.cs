@@ -69,7 +69,7 @@ namespace BotMatrix4
 		public static void SaveFollowers(List<Follower> followers, string file)
 		{
 
-			Cutil.Line("<Saving Followers> - Saving to '/" + file + "'");
+			//Cutil.Line("<Saving Followers> - Saving to '/" + file + "'");
 
 			using (Stream stream = File.Open(Session.path + file, FileMode.Create))
 			{
@@ -83,7 +83,7 @@ namespace BotMatrix4
 		public static List<Follower> LoadFollowers(string file)
 		{
 			//deserialize
-			Cutil.Line("<Load Followers> - Loading from '/" + file +"'");
+			//Cutil.Line("<Load Followers> - Loading from '/" + file +"'");
 
 			using (Stream stream = File.Open(Session.path + file, FileMode.Open))
 			{

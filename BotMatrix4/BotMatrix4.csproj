@@ -70,5 +70,8 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="bin\Release\bot.config">
+      <Link>Release\bot.config</Link>
+    </None>
   </ItemGroup>
 </Project>
