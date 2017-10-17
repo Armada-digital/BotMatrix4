@@ -134,9 +134,9 @@ namespace BotMatrix4
 				{
 					DateTime now = DateTime.Now;
 					double age = (now - f.Time).TotalSeconds;
-					if (age > 604800 / 3.5 ) // 604800 = 7 days - unfollow, then dont follow again for a long time
+					if (age > 604800 / 3 ) // 604800 = 7 days - unfollow, then dont follow again for a long time
 					{
-						Cutil.Line("<Unfollow> - " + f.ScreenName + " is of age." +" (" + age+")", ConsoleColor.DarkRed);
+						Cutil.Line("<Unfollow> - " + f.ScreenName + " is of age." +" (" + age+")", ConsoleColor.Cyan);
 						try
 						{
 							var friendships = Util.FindFriendship(Session.screenname, f.ScreenName);
@@ -158,7 +158,8 @@ namespace BotMatrix4
 									}
 									else
 									{
-										Cutil.Line("<Unfollow> - User, " + f.ScreenName + ", not followed back unfollowing", ConsoleColor.DarkCyan);
+										Cutil.Line("<Unfollow> - User, " + f.ScreenName + ", not followed back", ConsoleColor.DarkCyan);
+										Futil.LogUnfollow(f.ScreenName);
 										Util.UnfollowUserByScreenname(f.ScreenName);
 
 									}

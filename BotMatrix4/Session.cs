@@ -158,6 +158,8 @@ namespace BotMatrix4
 				}
 				fileEnded = false;
 				Cutil.Line ("<Initialize> - Session initialization complete");
+
+				Console.Title = "BotMatrix4 - " + screenname;
 			}
 		}
 
