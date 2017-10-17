@@ -31,6 +31,7 @@ namespace BotMatrix4
 						following = user.FriendsCount;
 					}
 
+					Cutil.Line("<First Run> - Following: " + following);
 
 					var friendship = await (from friend in Session.service.Friendship
 											where friend.Type == FriendshipType.FriendsList && friend.ScreenName == Session.screenname && friend.Cursor == cursor && friend.Count == following
@@ -41,6 +42,7 @@ namespace BotMatrix4
 
 						foreach (User user in friendship.Users)
 						{
+							Cutil.Line("<First Run> - New User Discovered: " + user.ScreenNameResponse);
 							Follower f = new Follower(user.ScreenNameResponse, DateTime.Now);
 							Session.followed.Add(f);
 						}
@@ -66,6 +68,23 @@ namespace BotMatrix4
 				Cutil.Line("<First Run> - Please restart");
 		}
 
+
+		public static void LogUnfollow(string screenname)
+		{
+			try
+			{
+				using (StreamWriter w = File.AppendText(Session.path + "ulog.log"))
+				{
+					w.WriteLine("Unfollowed: " + screenname.PadLeft(20) + " at" + DateTime.Now);
+				}
+			}
+
+			catch(Exception ex)
+			{
+				
+				Cutil.Error (ex.Message);	
+			}
+		}
 		public static void SaveFollowers(List<Follower> followers, string file)
 		{
 
