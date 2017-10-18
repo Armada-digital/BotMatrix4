@@ -40,10 +40,11 @@ namespace BotMatrix4
 			{
 
 				Thread botMatrix = new Thread(BotMatrix);
-				botMatrix.Start();
+				//botMatrix.Start();
 				Thread unfollow = new Thread(Unfollow);
-				unfollow.Start();
-			
+				//unfollow.Start();
+				Thread followFriday = new Thread(FollowFriday);
+				followFriday.Start();
 				/*
 				foreach (Follower follower in Session.followed)
 				{
@@ -57,24 +58,9 @@ namespace BotMatrix4
 				}
 				*/
 
-
-			
-
-
 			}
-
-
-
-
-
-
-
 			Console.ReadLine();
 		}
-
-	
-
-
 
 		private static void BotMatrix()
 		{
@@ -117,7 +103,6 @@ namespace BotMatrix4
 
 			}
 		}
-
 		private static void Unfollow()
 		{
 
@@ -134,7 +119,7 @@ namespace BotMatrix4
 				{
 					DateTime now = DateTime.Now;
 					double age = (now - f.Time).TotalSeconds;
-					if (age > 604800 / 3 ) // 604800 = 7 days - unfollow, then dont follow again for a long time
+					if (age > Session.waitTime * 86400) 
 					{
 						Cutil.Line("<Unfollow> - " + f.ScreenName + " is of age." +" (" + age+")", ConsoleColor.Cyan);
 						try
@@ -182,7 +167,66 @@ namespace BotMatrix4
 
 			}
 		}
+		private static async void FollowFriday()
+		{
 
+			List<Follower> ffl = null;
+
+			while (isRunning)
+			{
+				Random rnd = new Random();
+				int interval = rnd.Next(30, 45);
+
+				if (DateTime.Now.DayOfWeek == DayOfWeek.Wednesday && ffl != null)
+				{
+					if (ffl.Count > 7)
+					{
+						string a, b, c, d, e, f, g;
+						a = " @" + ffl.Last().ScreenName;
+						ffl.RemoveAt(ffl.Count - 1);
+						b = " @" + ffl.Last().ScreenName;
+						ffl.RemoveAt(ffl.Count - 1);
+						c = " @" + ffl.Last().ScreenName;
+						ffl.RemoveAt(ffl.Count - 1);
+						d = " @" + ffl.Last().ScreenName;
+						ffl.RemoveAt(ffl.Count - 1);
+						e = " @" + ffl.Last().ScreenName;
+						ffl.RemoveAt(ffl.Count - 1);
+						f = " @" + ffl.Last().ScreenName;
+						ffl.RemoveAt(ffl.Count - 1);
+						g = " @" + ffl.Last().ScreenName;
+						ffl.RemoveAt(ffl.Count - 1);
+
+						//Util.SendTweet("#FF " + a + b + c + d + e + f + g);
+						Console.WriteLine("#FF " + a + b + c + d + e + f + g);
+						interval = 0;
+					}
+				}
+
+				else
+				{
+
+					ffl = new List<Follower>();
+
+					var followers = await Util.ReturnFriends(Session.screenname);
+
+					foreach (User u in followers)
+					{
+						ffl.Add(new Follower(u.ScreenNameResponse, DateTime.Now));
+					}
+
+					interval = 0;
+				}
+
+				Cutil.Line("<Follow Friday> - Waiting " + interval + " minutes");
+				Thread.Sleep(interval * 60000);
+
+			
+			}
+
+
+
+		}
 
 	}
 }

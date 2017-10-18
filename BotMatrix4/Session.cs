@@ -21,6 +21,7 @@ namespace BotMatrix4
 		public static string screenname;
 		public static ulong userID;
 		public static double desiredRatio;
+		public static double waitTime;
 
 		public static List<Follower> followed;
 		public static List<Follower> unfollowed;
@@ -113,8 +114,25 @@ namespace BotMatrix4
 				}
 				fileEnded = false;
 
-
-
+				//Wait time
+				while (fileEnded == false)
+				{
+					string line = r.ReadLine();
+					if (line != null && !line.StartsWith("#") && line != "")
+					{
+						try
+						{
+							waitTime = double.Parse(line);
+						}
+						catch (Exception ex)
+						{
+							Cutil.Error("<Initialize> - Please enter valid wait time in config file");
+							Cutil.Error("<Initialize) - " + ex.Message);
+						}
+						fileEnded = true;
+					}
+				}
+				fileEnded = false;
 
 				while (fileEnded == false) {
 					string line = r.ReadLine ();

@@ -10,20 +10,20 @@ namespace BotMatrix4
 {
 	public class Util
 	{
-		
+
 		#region Search Functions
 		public async static Task<List<Friendship>> FindFriendship(string source, string target)
 		{
 			try
 			{
-				var friendships =  await(from friendship in Session.service.Friendship
+				var friendships = await (from friendship in Session.service.Friendship
 										 where friendship.Type == FriendshipType.Show && friendship.SourceScreenName == source && friendship.TargetScreenName == target
 										 select friendship).ToListAsync();
 				if (friendships != null)
 				{
 					return friendships;
 				}
-				else 
+				else
 				{
 					return null;
 				}
@@ -35,6 +35,26 @@ namespace BotMatrix4
 				return null;
 			}
 		}
+
+		public async static Task<List<User>> ReturnFriends(string source)
+		{
+			var friendList =await(from f in Session.service.Friendship
+									where f.Type == FriendshipType.FriendsList && f.ScreenName == source
+									select f).SingleOrDefaultAsync();
+			if (friendList != null)
+			{
+				foreach (User u in friendList.Users)
+				{
+					Console.WriteLine(u.ScreenNameResponse);
+				}
+				return friendList.Users;
+			}
+			else
+			{
+				return null;
+			}
+		}
+
 		#endregion
 
 		#region Follow Functions
@@ -42,7 +62,7 @@ namespace BotMatrix4
 		{
 			try
 			{
-				
+
 				Cutil.Line("<Unfollow user by ScreenName> - Screenname: " + screenname, ConsoleColor.DarkCyan);
 
 				var user = await Session.service.DestroyFriendshipAsync(screenname, default(CancellationToken));
@@ -62,7 +82,7 @@ namespace BotMatrix4
 			{
 				Cutil.Error("Unfollow user by ScreenName> " + ex);
 			}
-					
+
 		}
 		public async static void FollowUserByStatus(Status status)
 		{
@@ -126,7 +146,7 @@ namespace BotMatrix4
 			int randomNumberHashtag = rnd.Next(0, Session.hashtags.Count);
 			List<Status> tweets = Search(Session.hashtags[randomNumberHashtag]).ToList();
 
-		
+
 			if (tweets != null)
 			{
 				Retweet(tweets[rnd.Next(0, tweets.Count)]);
@@ -139,6 +159,16 @@ namespace BotMatrix4
 			return tweets;
 		}
 		#endregion Hashtag Functions
+
+		#region FollowFriday
+
+		public static List<User> GetFriends(string source)
+		{
+			var list = ReturnFriends(source);
+			return null;
+		}
+
+		#endregion
 
 		#region Simple Functions
 		public async static void Retweet(Status status)
