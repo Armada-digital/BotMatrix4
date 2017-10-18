@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using PromptGenerator;
 using TweetSharp;
 
 namespace BotMatrix4
@@ -40,24 +41,14 @@ namespace BotMatrix4
 			{
 
 				Thread botMatrix = new Thread(BotMatrix);
-				//botMatrix.Start();
+				botMatrix.Start();
 				Thread unfollow = new Thread(Unfollow);
-				//unfollow.Start();
+				unfollow.Start();
+				Thread prompts = new Thread (Prompts);
+				prompts.Start ();
 				Thread followFriday = new Thread(FollowFriday);
 				followFriday.Start();
-				/*
-				foreach (Follower follower in Session.followed)
-				{
-					double t = (DateTime.Now - follower.Time).TotalMinutes;
-					Cutil.Line("<Main> - Followers name: " + follower.ScreenName.PadRight(16) + " age: " + t, ConsoleColor.Gray);
-				}
-
-				foreach (Follower follower in Session.unfollowed)
-				{
-					Cutil.Line("<Main> - Unfollowed: name- " + follower.ScreenName + " time- " + follower.Time, ConsoleColor.Gray);
-				}
-				*/
-
+			
 			}
 			Console.ReadLine();
 		}
@@ -162,9 +153,22 @@ namespace BotMatrix4
 
 				}
 			
-				Cutil.Line("<BotMatrix> - Waiting " + interval + " minutes");
+				Cutil.Line("<Unfollow> - Waiting " + interval + " minutes");
 				Thread.Sleep(interval * 60000);
 
+			}
+		}
+		private static void Prompts()
+		{
+			while (isRunning) 
+			{
+				Random rnd = new Random ();
+				int interval = rnd.Next (60, 180);
+
+				Util.SendTweet (ThreeCharacters.ReturnThreeCharacters() + "#WritingPrompt #ThreeRandomCharacters");
+
+				Cutil.Line("<Prompts> - Waiting " + interval + " minutes");
+				Thread.Sleep(interval * 60000);
 			}
 		}
 		private static async void FollowFriday()
@@ -177,45 +181,72 @@ namespace BotMatrix4
 				Random rnd = new Random();
 				int interval = rnd.Next(30, 45);
 
-				if (DateTime.Now.DayOfWeek == DayOfWeek.Wednesday && ffl != null)
-				{
-					if (ffl.Count > 7)
-					{
+				if (DateTime.Now.DayOfWeek == DayOfWeek.Friday && ffl != null) {
+					if (ffl.Count > 7) {
 						string a, b, c, d, e, f, g;
-						a = " @" + ffl.Last().ScreenName;
-						ffl.RemoveAt(ffl.Count - 1);
-						b = " @" + ffl.Last().ScreenName;
-						ffl.RemoveAt(ffl.Count - 1);
-						c = " @" + ffl.Last().ScreenName;
-						ffl.RemoveAt(ffl.Count - 1);
-						d = " @" + ffl.Last().ScreenName;
-						ffl.RemoveAt(ffl.Count - 1);
-						e = " @" + ffl.Last().ScreenName;
-						ffl.RemoveAt(ffl.Count - 1);
-						f = " @" + ffl.Last().ScreenName;
-						ffl.RemoveAt(ffl.Count - 1);
-						g = " @" + ffl.Last().ScreenName;
-						ffl.RemoveAt(ffl.Count - 1);
-
-						//Util.SendTweet("#FF " + a + b + c + d + e + f + g);
-						Console.WriteLine("#FF " + a + b + c + d + e + f + g);
-						interval = 0;
+						a = " @" + ffl.Last ().ScreenName;
+						ffl.RemoveAt (ffl.Count - 1);
+						b = " @" + ffl.Last ().ScreenName;
+						ffl.RemoveAt (ffl.Count - 1);
+						c = " @" + ffl.Last ().ScreenName;
+						ffl.RemoveAt (ffl.Count - 1);
+						d = " @" + ffl.Last ().ScreenName;
+						ffl.RemoveAt (ffl.Count - 1);
+						e = " @" + ffl.Last ().ScreenName;
+						ffl.RemoveAt (ffl.Count - 1);
+						f = " @" + ffl.Last ().ScreenName;
+						ffl.RemoveAt (ffl.Count - 1);
+						g = " @" + ffl.Last ().ScreenName;
+						ffl.RemoveAt (ffl.Count - 1);
+						try {
+							Util.SendTweet ("#FF " + a + b + c + d + e + f + g);
+						} catch (Exception ex) {
+							Cutil.Error ("<Follow Friday> - " + ex.Message);
+						}
 					}
-				}
+				} else {
+					
 
-				else
-				{
+					try {
+						ffl = new List<Follower> ();
 
-					ffl = new List<Follower>();
+						var followers = await Util.ReturnFriends (Session.screenname);
 
-					var followers = await Util.ReturnFriends(Session.screenname);
+						foreach (User u in followers) {
+							ffl.Add (new Follower (u.ScreenNameResponse, DateTime.Now));
+						}
 
-					foreach (User u in followers)
-					{
-						ffl.Add(new Follower(u.ScreenNameResponse, DateTime.Now));
+						switch(DateTime.Now.DayOfWeek){
+						case DayOfWeek.Monday:
+								interval = 4320;
+							break;
+						case DayOfWeek.Tuesday:
+								interval = 2880;
+							break;
+						case DayOfWeek.Wednesday:
+								interval = 1440;
+							break;
+						case DayOfWeek.Thursday:
+								interval = 60;
+							break;
+						case DayOfWeek.Friday:
+								interval = 0;
+							break;
+						case DayOfWeek.Saturday:
+								interval = 4320;
+							break;
+						case DayOfWeek.Sunday:
+								interval = 4320;
+							break;
+
+						}
+
+
+					} catch (Exception ex) {
+						Cutil.Error ("<Follow Friday> - " + ex.Message);
+						interval = 60;
 					}
 
-					interval = 0;
 				}
 
 				Cutil.Line("<Follow Friday> - Waiting " + interval + " minutes");

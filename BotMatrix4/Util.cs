@@ -43,10 +43,6 @@ namespace BotMatrix4
 									select f).SingleOrDefaultAsync();
 			if (friendList != null)
 			{
-				foreach (User u in friendList.Users)
-				{
-					Console.WriteLine(u.ScreenNameResponse);
-				}
 				return friendList.Users;
 			}
 			else

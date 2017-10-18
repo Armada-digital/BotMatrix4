@@ -12,3 +12,4 @@
 /home/colin/BotMatrix4/BotMatrix4/bin/Release/BotMatrix4.exe
 /home/colin/BotMatrix4/BotMatrix4/obj/x86/Release/BotMatrix4.exe
 /home/colin/BotMatrix4/BotMatrix4/obj/x86/Release/BotMatrix4.exe.mdb
+/home/colin/BotMatrix4/BotMatrix4/bin/Release/PromptGenerator.dll
